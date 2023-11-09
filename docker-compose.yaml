@@ -1,0 +1,16 @@
+version: '20.10.24'
+services:
+  isjkhrs:
+    image: isjkhrs-dev-i
+    build: 
+      dockerfile: Dockerfile
+    container_name: isjkhrs-dev-c
+    volumes:
+      - ./isjkhrs:isjkhrs
+      - node_modules:/isjkhrs/node_modules/
+    ports:
+      -"3000:3000"
+    environment:
+      - NODE_ENV=development
+volumes:
+ node_modules
