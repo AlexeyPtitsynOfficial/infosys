@@ -2,21 +2,27 @@ import { Button, Card, CardActions, CardContent, Checkbox, FormControl, InputLab
 
 import { FunctionComponent, JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useState } from "react"
 import { useAddTodoMutation, useDeleteTodoMutation, useGetTodosQuery, useUpdateTodoMutation } from './todoApiSlice';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { selectAllUsers, useGetUsersQuery } from '../users/usersApiSlice';
 import { selectPostById } from '../posts/postSlice';
 import TodoAuthor from './TodoAuthor';
+import { useDispatch } from 'react-redux';
 
 const TodoList: FunctionComponent = () => {
-    const [newTodo, setNewTodo] = useState({ user_id:0, user: 'Ivanov Ivan', title: '', status: 'pending'});
+    const dispatch = useDispatch()
+    
+    const [newTodo, setNewTodo] = useState({ user_id:'', user: 'Ivanov Ivan', title: '', status: 'pending'});
 
-    const { refetch,
+    /*const { refetch,
         data: todos,
         isLoading,
         isSuccess,
         isError,
         error
-    } = useGetTodosQuery()
+    } = useGetTodosQuery()*/
+
+    const todoQuery = useGetTodosQuery()
+
     const [addTodo] = useAddTodoMutation()
     const [updateTodo] = useUpdateTodoMutation()
     const [deleteTodo] = useDeleteTodoMutation()
@@ -33,7 +39,7 @@ const TodoList: FunctionComponent = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         addTodo(newTodo)
-        setNewTodo({ user_id:0, user: 'Ivanov Ivan', title: '', status: 'pending'})
+        setNewTodo({ user_id:'', user: 'Ivanov Ivan', title: '', status: 'pending'})
     }
 
     const usersOptions = users.map(user=> (
@@ -70,14 +76,14 @@ const TodoList: FunctionComponent = () => {
     )
 
     let content
-    if (isLoading) {
+    if (todoQuery.isLoading) {
         content = <p>Загрузка...</p>
-    } else if (isSuccess) {
+    } else if (todoQuery.isSuccess) {
 
-        const {ids, entities} = todos
+        const {ids, entities} = todoQuery.data
         content = ids?.map(id => {
             return (
-                <Card key={entities[id]?.id}>
+                <Card key={entities[id]?.id} data-testid="card">
                     <CardContent>
                         <Stack>
                             <Stack direction='row' alignItems='center'>
@@ -104,7 +110,7 @@ const TodoList: FunctionComponent = () => {
     return (
         <Stack spacing={1}>
             <Typography variant='h4'>Задачи</Typography>
-            {newItemSection}
+            
             {content}
         </Stack>
     )

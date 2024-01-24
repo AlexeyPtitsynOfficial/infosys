@@ -89,7 +89,7 @@ const SinglePostPage = () => {
     if(isSuccess) {
 
         const { ids, entities } = comments
-        commentsContent = ids?.map(id => {
+        commentsContent = ids?.map((id: string | number) => {
             return (<Stack direction="row" spacing={1}>
                         <Avatar/>
                         <Stack spacing={1}>

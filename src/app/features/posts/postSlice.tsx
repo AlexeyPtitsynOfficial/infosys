@@ -150,9 +150,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           }
         }
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'Post' as const, id: arg.id }
-      ]
+      invalidatesTags: [{ type: 'Post', id: 'LIST' }]
     }),
     updatePost: builder.mutation({
       query: initialPost => ({

@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect, memo } from "react";
 import { useAppSelector } from "../../hooks";
 import { selectAllUsers, useGetUsersQuery } from "../users/usersApiSlice";
 import { Link } from "react-router-dom";
@@ -31,4 +31,9 @@ const PostAuthor = (props: AuthorProps ) => {
     return content
 }
 
-export default PostAuthor
+export default memo(PostAuthor,(prev: AuthorProps, next: AuthorProps) => {
+    if(prev.user_id === next.user_id)
+        return false;
+    else
+        return true;
+})

@@ -21,7 +21,7 @@ const EditPostForm = (props: {id?: Number, onClose: (value?: string) => void}) =
     const [post, setPost] = useState<Post>(postOrigin || {
         id: 0, 
         user_id: 0, 
-        user: '',
+        user: 'sdf',
         title: '', 
         body: '', 
         date: new Date().toISOString(), 
@@ -100,7 +100,7 @@ const EditPostForm = (props: {id?: Number, onClose: (value?: string) => void}) =
             setPost({
                 id: 0, 
                 user_id: 0, 
-                user: '',
+                user: 'asd',
                 title: '', 
                 body: '', 
                 date: new Date().toISOString(),

@@ -8,7 +8,8 @@
     "build": "webpack --config webpack/webpack.config.js --env env=prod",
     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "react-scripts test",
+    "coverage": "react-scripts test --coverage --watchAll --collectCoverageFrom='src/app/**/*.{ts,tsx}'"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,8 @@
     "@babel/plugin-transform-runtime": "^7.21.4",
     "@babel/runtime": "^7.21.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.0",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.34",
@@ -34,7 +37,9 @@
     "html": "^1.0.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.3",
+    "jest-fetch-mock": "^3.0.3",
     "lint-staged": "^13.2.1",
+    "msw": "^2.0.6",
     "prettier": "^2.8.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -65,7 +70,8 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.10.0"
+    "react-router-dom": "^6.10.0",
+    "react-scripts": "^5.0.1"
   },
   "husky": {
     "hooks": {
@@ -78,6 +84,11 @@
     ],
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios|@ngrx|(?!deck.gl)|ng-dynamic)"
     ]
   }
 }

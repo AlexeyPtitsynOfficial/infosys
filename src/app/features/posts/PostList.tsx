@@ -4,7 +4,7 @@ import PostExcerpt from "./PostExcerpt";
 import { useGetPostsQuery } from "./postSlice";
 import { Button, Grid, Stack } from "@mui/material";
 import EditPostForm from "./EditPostForm";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
 
 const PostList: FunctionComponent = () => {
     const { refetch,
@@ -21,10 +21,10 @@ const PostList: FunctionComponent = () => {
         setOpen(true)
     }
 
-    const handleDialogClose = () => {
+    const handleDialogClose = useCallback(() => {
         setOpen(false)
-        refetch()
-    }
+        //refetch()
+    },[])
 
     let content
     if(isLoading) {

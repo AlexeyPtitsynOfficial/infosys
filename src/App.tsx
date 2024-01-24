@@ -11,7 +11,7 @@ import SinglePostPage from './app/features/posts/SinglePostPage'
 import UsersList from './app/features/users/UsersList'
 import UserPage from './app/features/users/UserPage'
 
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom'
 import TodoList from './app/features/todo/TodoList'
 import RolesList from './app/features/roles/RolesList'
 

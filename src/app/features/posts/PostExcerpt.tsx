@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from "../../hooks";
 import { selectPostById } from "./postSlice";
 import { Button, Card, CardActions, CardContent, CardHeader, Stack, Typography } from "@mui/material";
+import React from "react";
 
 const PostExcerpt = (props: {postId: number}) => {
     const post = useAppSelector(state => selectPostById(state, props.postId))!
@@ -26,4 +27,9 @@ const PostExcerpt = (props: {postId: number}) => {
     )
 }
 
-export default PostExcerpt
+export default React.memo(PostExcerpt, (prev,next) => {
+    if(prev.postId ===next.postId)
+        return false;
+    else
+        return true;
+})

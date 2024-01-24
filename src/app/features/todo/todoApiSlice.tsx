@@ -3,7 +3,7 @@ import { apiSlice } from "../api/apiSlice";
 
 export interface Todo {
     id: number,
-    user_id: number,
+    user_id: string,
     title: string,
     due_on: string,
     status: string
@@ -23,6 +23,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getTodos: builder.query<EntityState<Todo>, void>({
             query: () => '/todos',
+            keepUnusedDataFor: 5,
             transformResponse: (responseData: Todo[], meta) => {
 
                 return todosAdapter.setAll(initialState, responseData)
@@ -33,7 +34,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
                     ...result.ids.map(id => ({ type: 'Todo' as const, id })),
                     { type: 'Todo', id: 'LIST' },
                     ]
-                : [{ type: 'Todo', id: 'LIST' }],
+                : [{ type: 'Todo', id: 'LIST' }]
         }),
         addTodo: builder.mutation({
             query: initialTodo => ({
@@ -41,9 +42,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: initialTodo
             }),
-            invalidatesTags: (result, error, arg) => [
-                { type: 'Todo' as const, id: arg.id }
-              ]
+            invalidatesTags: [{ type: 'Todo', id: 'LIST' }]
         }),
         updateTodo: builder.mutation({
             query: initialTodo => ({
@@ -60,7 +59,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
                 url: `users/${initialTodo.user_id}/todos`,
                 method: 'DELETE',
                 body: initialTodo
-            })
+            }),
         })
     })
 })
